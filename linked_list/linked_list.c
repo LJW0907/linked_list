@@ -36,6 +36,37 @@ void add_first_local(Node** head_ptr, const char *item) { //이중 포인터로 선언해
 	*head_ptr = tmp; //(3)
 }
 
+//node 중간에 또 다른 node를 끼워넣는 함수
+int add_node(Node* former, const char *item) {
+	if (former == NULL)
+		return 0;
+
+	Node* tmp = (Node*)malloc(sizeof(Node));
+	tmp->data = item;
+	tmp->next = former->next;
+	former->next = tmp;
+
+	return 1;
+}
+
+//첫번째 node를 삭제하는 함수(head는 전역변수)
+Node* delete_first() {
+	Node* tmp = head;
+	head = head->next;
+
+	return tmp; //삭제한 node의 주소를 반환한다.
+}
+
+//어떤 node의 다음 node 삭제
+Node* delete_node(Node* former) {
+	Node* tmp = (Node*)malloc(sizeof(Node));
+	tmp = former->next;
+	former->next = tmp->next;
+
+	return tmp;
+}
+
+
 int main() {
 	/*head = (Node*)malloc(sizeof(Node));
 	head->data = "Tuesday";
@@ -73,6 +104,9 @@ int main() {
 	q->data = "Harry";
 	q->next = NULL;
 	p->next = q;
+
+	add_node(p, "Gay");
+	delete_node(head);
 
 	Node *x = head;
 	while (x != NULL) {
